@@ -15,28 +15,32 @@ class routes {
 
     public static init(app: any, options: any) {
 
-        cache = new LRUCache({
+        this.cache = new LRUCache({
             max: 100,
             maxAge: 1000 * 60 * 60 // 1hour
         });
 
         // First page load asynchronous logic here and endpoint routes
         app.get('/', (req, res) => {
-          renderAndCache(req, res, '/')
+          this.renderAndStore(req, res, '/');
         })
 
     }
 
-    public static async renderAndStore(req: any, res: any, path: string, params: any) {
+    public static getCacheKey(req: any) {
+        return '${req.url}';
+    }
+
+    public static async renderAndStore(req: any, res: any, path: string, params?: any) {
 
         // For every page rendered, we store it in the cache asynchronously and re-render it.
         // The rendered HTML will have markings that uses the generated distribution files in /dist directory, any linked files in the markup.
-        var key = getCacheKey(req);
+        var key = this.getCacheKey(req);
 
         // If the requested page is in the cache, we serve it.
         if(this.cache.has(key)) {
             res.setHeader('x-cache', 'Cached'); 
-            res.send(cache.get(key));
+            res.send(this.cache.get(key));
         }
 
         try {
@@ -47,7 +51,7 @@ class routes {
             // Something is wrong with the request, let's skip the cache
             if (res.statusCode !== 200) {
               res.send(html)
-              return void;
+              return null;
             }
 
             // Let's cache this page

@@ -17,11 +17,12 @@ var config = {
         target: "node", 
         externals: [nodeExternals()], // We exclude the nodejs modules from bundling
         entry: {
-                app: ["./app/index.js"]
+                framework: "./app/core/app.ts", // Bundle for the framework as an SSR first load bundle. We'll use this for our SSR Rendered HTML.
+                client: "./app/index.js" // Bundle for the module plugin for client-sided rendering after SSR. This will be loaded asynchronously afterwards.
         },
         output: {
                 path: path.resolve(__dirname, './app', 'dist'),
-                filename: "bundle-backend.js",
+                filename: "[name].bundle.js",
                 sourcePrefix: ''
         },
         resolve: {
@@ -66,6 +67,12 @@ var config = {
                                 ]    
                         }
                 ] 
+        },
+        optimization: {
+                splitChunks: {
+                        chunks: "all",
+                        name: "modules.bundle.js"
+                }
         },
         plugins: [  // This is where we run webpack plugins for compilation
                 new MiniCssExtractPlugin({
