@@ -39,7 +39,7 @@ class routes {
 
         // If the requested page is in the cache, we serve it.
         if(this.cache.has(key)) {
-            res.setHeader('x-cache', 'Cached'); 
+            res.setHeader('x-cache', 'HIT'); // Cached - Browser acknowledges files are already loaded.
             res.send(this.cache.get(key));
         }
 
@@ -57,7 +57,7 @@ class routes {
             // Let's cache this page
             this.cache.set(key, html)
 
-            res.setHeader('x-cache', 'Not Cached')
+            res.setHeader('x-cache', 'MISS') // Not Cached - Browser acknowledges files are new and must be loaded.
             res.send(html)
 
         } catch (err) {
