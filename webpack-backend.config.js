@@ -71,7 +71,7 @@ var config = {
         optimization: {
                 splitChunks: {
                         chunks: "all",
-                        name: "modules.bundle.js"
+                        name: "modules"
                 }
         },
         plugins: [  // This is where we run webpack plugins for compilation
