@@ -1,9 +1,5 @@
-Terria Framework
+Geospatial Framework
 ==========
-
-![Terria logo](terria-logo.png "Terria logo")
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/TerriaJS/TerriaMap.svg)](https://greenkeeper.io/)
 
 Forked development from TerriaJS/TerriaMap for a new boilerplate cms framework based on TerriaJS with backend functionality for managing modules such as TerriaJS Catalog and other data as well as addon/plugin system for extensibility. The framework is based on an initiative to provide government agencies, research institution and space operations the capability to manage and visualize their data on a powerful, polyglotic and scalable geospatial computing framework.
 
